@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harf", "Harf\Harf.csproj", "{6F308626-954E-45F5-8944-EAA66C1FF1E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harf.Test", "Harf.Test\Harf.Test.csproj", "{0D3B448B-8134-40F8-8E49-CE09E0B7793B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HarfTest", "Harf.Test\HarfTest.csproj", "{0D3B448B-8134-40F8-8E49-CE09E0B7793B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
