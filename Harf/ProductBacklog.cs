@@ -1,20 +1,25 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Harf
 {
     public class ProductBacklog
     {
-        private readonly List<string> _items = new List<string>();
+        private readonly List<BacklogItem> _items = new List<BacklogItem>();
+        private static ProductBacklog _backlog;
 
         public static ProductBacklog GetInstance()
         {
-            
-            return new ProductBacklog();
+            return _backlog ?? (_backlog = new ProductBacklog());
         }
 
-        public void AddBacklogItem(string itemTitle)
+        public BacklogItemBuilder AddBacklogItem(string itemTitle)
         {
-            _items.Add(itemTitle);
+            var builder = new BacklogItemBuilder();
+            BacklogItem item = builder
+                .CreateBacklogItem(itemTitle);
+            _items.Add(item);
+            return builder;
         }
 
         public int Count()
@@ -24,20 +29,48 @@ namespace Harf
 
         public BacklogItem GetItemByTitle(string itemTitle)
         {
-            if (_items.Contains(itemTitle))
-                return new BacklogItem(itemTitle);
-            return null;
+            return _items.SingleOrDefault(i => i.Title.Equals(itemTitle));
+        }
+
+        internal static void Clear()
+        {
+            _backlog = null;
+        }
+    }
+
+    public class BacklogItemBuilder
+    {
+        private string _title;
+        private string _description;
+
+        public BacklogItemBuilder WithDescription(string testItemDescription)
+        {
+            _description = testItemDescription;
+            return this;
+        }
+
+        public BacklogItemBuilder CreateBacklogItem(string itemTitle)
+        {
+            _title = itemTitle;
+            return this;
+        }
+
+        public static implicit operator BacklogItem(BacklogItemBuilder tb)
+        {
+            return new BacklogItem(tb._title) {Description = tb._description};
         }
     }
 
     public class BacklogItem
     {
-        public BacklogItem(string itemTitle)
+        internal BacklogItem(string itemTitle)
         {
             Title = itemTitle;
         }
 
         public string Title { get; private set; }
+        public string Description { get; set; }
+
     }
 
 }

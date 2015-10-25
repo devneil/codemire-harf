@@ -2,8 +2,6 @@
 PRoduct Backlog
 ---------------
 
-PBI singleton...
-
 
 CHange Product Backlog Item
 

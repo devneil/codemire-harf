@@ -12,6 +12,7 @@ namespace HarfTest
         [SetUp]
         public void SetUp()
         {
+            ProductBacklog.Clear();
             _backlog = ProductBacklog.GetInstance();
         }
         [Test]
@@ -50,12 +51,38 @@ namespace HarfTest
             _backlog.GetItemByTitle("NotMe").Should().BeNull();
         }
 
+        [Test]
+        public void EnsureSingleBacklog()
+        {
+            var backlog2 = ProductBacklog.GetInstance();
+
+            backlog2.Should().Be(_backlog);
+        }
         private void Add(string itemTitle)
         {
             _backlog.AddBacklogItem(itemTitle);
         }
-
     }
 
+    [TestFixture]
+    public class TestGrooming
+    {
+        private ProductBacklog _backlog;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _backlog = ProductBacklog.GetInstance();
+        }
+
+        [Test]
+        public void CanAddDescriptionToBacklogItem()
+        {
+            const string desc = "Test Item description";
+            BacklogItem item =  _backlog.AddBacklogItem("TestItem")
+                .WithDescription(desc);
+            item.Description.Should().Be(desc);
+        }
+    }
 }
 
